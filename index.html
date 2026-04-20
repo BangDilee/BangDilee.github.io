@@ -192,7 +192,7 @@
       object-fit: cover;
     }
 
-    /* about */
+    /* about - tanpa gambar */
     #about {
       background: var(--dark2);
       display: flex;
@@ -200,14 +200,7 @@
       flex-wrap: wrap;
       align-items: center;
     }
-    .about-img {
-      flex: 0 0 300px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid var(--red);
-      box-shadow: 0 0 20px rgba(230,51,51,0.3);
-    }
-    .about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* about-img dihapus */
     .about-text { flex: 1; min-width: 260px; }
     .about-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; }
     .about-text h2 span { color: var(--red); }
@@ -466,11 +459,6 @@
       .socials, .btn-group {
         justify-content: center;
       }
-      .about-img {
-        flex: 0 0 auto;
-        width: 240px;
-        margin: 0 auto;
-      }
       .port-grid {
         grid-template-columns: 1fr;
       }
@@ -535,11 +523,8 @@
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ABOUT - tanpa foto -->
 <section id="about">
-  <div class="about-img">
-    <img src="https://i.ibb.co.com/7NZwPxmD/file-000000002fa87208b357a95867b7c106.png" alt="About">
-  </div>
   <div class="about-text">
     <h2>About <span>Me</span></h2>
     <p>As a full-stack developer, I channel innovation to build digital empires. Inspired by the King of Curses, I create web solutions that dominate the digital realm with precision and creativity.</p>
@@ -583,7 +568,6 @@
 <section id="portfolio">
   <div class="port-title">Featured <span>Work</span></div>
   <div class="port-grid">
-    <!-- card 1 -->
     <div class="port-card">
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="project">
       <div class="port-info">
@@ -653,7 +637,7 @@
   </div>
 </section>
 
-<!-- CONTACT (tanpa form) -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="contact-container">
     <h2>Contact <span>Me</span></h2>
@@ -704,7 +688,6 @@
   menuToggle.addEventListener('click', () => {
     navLinksContainer.classList.toggle('active');
   });
-  // close menu after click on link
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
       navLinksContainer.classList.remove('active');
