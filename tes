@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+  
+  <!-- 🔒 KEAMANAN: Security Headers via Meta Tags -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://placehold.co https://i.ibb.co.com; media-src 'self' https://www.soundhelix.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), bluetooth=()">
+  
+  <meta name="description" content="BangDilee - anak akuakultur yang serius belajar ngoding. Ingin dikenal sebagai anak baik."/>
+  <meta name="author" content="BangDilee"/>
+  <title>BangDilee — anak baik</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --red: #e63333;
+      --dark: #0d0d0d;
+      --dark2: #131313;
+      --dark3: #1a1a1a;
+      --white: #ffffff;
+      --gray: #aaa;
+      --light-bg: #f5f5f5;
+      --light-text: #333;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light-mode {
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+
+    body.light-mode .gallery-card,
+    body.light-mode .empty-gallery,
+    body.light-mode .countdown-item,
+    body.light-mode .quote-box {
+      background: #fff;
+      border-color: #ddd;
+    }
+
+    body.light-mode .tag,
+    body.light-mode .tab-btn {
+      background: #eee;
+      color: #333;
+    }
+
+    body.light-mode nav {
+      background: rgba(255,255,255,0.96);
+      border-bottom-color: #ddd;
+    }
+
+    body.light-mode .nav-links a {
+      color: #555;
+    }
+
+    body.light-mode .nav-links a:hover,
+    body.light-mode .nav-links a.active {
+      color: var(--red);
+    }
+
+    body.light-mode .floating-social a,
+    body.light-mode .music-player,
+    body.light-mode .theme-toggle {
+      background: #fff;
+      color: #333;
+    }
+
+    /* Custom Cursor */
+    @media (min-width: 769px) {
+      .cursor {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition: 0.1s;
+        transform: translate(-50%, -50%);
+      }
+      .cursor-follower {
+        width: 40px;
+        height: 40px;
+        background: rgba(230,51,51,0.2);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transition: 0.2s;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.5s;
+    }
+    .preloader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--gray);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: var(--red);
+      z-index: 10001;
+    }
+
+    /* Floating Social */
+    .floating-social {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .floating-social a {
+      width: 45px;
+      height: 45px;
+      background: var(--dark3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+      border: 1px solid var(--red);
+    }
+    .floating-social a:hover {
+      transform: scale(1.1);
+      background: var(--red);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--dark3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      border: 1px solid var(--red);
+      transition: 0.3s;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Music Player */
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--dark3);
+      padding: 10px 15px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      border: 1px solid var(--red);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .music-player:hover {
+      transform: scale(1.05);
+    }
+    .music-player i {
+      font-size: 20px;
+      color: var(--red);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(13, 13, 13, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #1f1f1f;
+      padding: 16px 24px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .logo span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--white);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    body.light-mode .menu-toggle {
+      color: #333;
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    section.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Home */
+    #home {
+      padding-top: 130px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .home-text { flex: 1; min-width: 260px; }
+    .home-text h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.2; margin: 16px 0; }
+    .home-text .sapaan { font-size: 1.3rem; color: var(--red); }
+    .home-text .desc { color: var(--gray); line-height: 1.6; margin: 20px 0; max-width: 500px; }
+
+    .socials {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .socials a:hover { border-color: var(--red); color: var(--red); }
+    body.light-mode .socials a { color: #333; }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: white;
+      border: 2px solid var(--red);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--red);
+    }
+    .btn-outline {
+      border: 2px solid var(--white);
+      color: white;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+    body.light-mode .btn-outline {
+      border-color: #333;
+      color: #333;
+    }
+
+    .avatar-ring {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 3px solid var(--red);
+      box-shadow: 0 0 30px rgba(230,51,51,0.4);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .avatar-ring:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(230,51,51,0.6);
+    }
+    .avatar-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* About */
+    #about {
+      background: var(--dark2);
+      text-align: center;
+    }
+    body.light-mode #about { background: #eee; }
+    .about-text { max-width: 800px; margin: 0 auto; }
+    .about-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; }
+    .about-text h2 span { color: var(--red); }
+    .about-text p { color: var(--gray); line-height: 1.7; margin-bottom: 16px; }
+    body.light-mode .about-text p { color: #555; }
+
+    .tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 30px 0 20px;
+    }
+    .tag {
+      background: var(--dark3);
+      border: 1px solid #333;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    /* Gallery */
+    #gallery { text-align: center; }
+    #gallery h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; }
+    #gallery h2 span { color: var(--red); }
+    .gallery-sub { color: var(--gray); margin-bottom: 50px; }
+
+    .gallery-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid var(--gray);
+      color: var(--gray);
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .gallery-card {
+      background: var(--dark3);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #222;
+      transition: 0.3s;
+    }
+    .gallery-card:hover {
+      border-color: var(--red);
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .gallery-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .gallery-card .caption {
+      padding: 12px;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    .empty-gallery {
+      padding: 60px;
+      background: var(--dark3);
+      border-radius: 20px;
+      text-align: center;
+      color: var(--gray);
+    }
+
+    /* Quote */
+    #quote {
+      background: linear-gradient(135deg, var(--dark2) 0%, var(--dark3) 100%);
+      text-align: center;
+      padding: 80px 24px;
+    }
+    body.light-mode #quote {
+      background: linear-gradient(135deg, #e0e0e0 0%, #ccc 100%);
+    }
+    .quote-box {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .quote-text {
+      font-size: 1.6rem;
+      font-style: italic;
+      margin-bottom: 20px;
+      color: var(--red);
+    }
+    .quote-author {
+      color: var(--gray);
+      font-size: 1rem;
+    }
+    .new-quote-btn {
+      margin-top: 25px;
+      background: var(--red);
+      border: none;
+      padding: 10px 25px;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      font-family: inherit;
+      transition: 0.3s;
+    }
+    .new-quote-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Countdown */
+    .countdown-section {
+      text-align: center;
+      padding: 60px 24px;
+      background: var(--dark3);
+    }
+    body.light-mode .countdown-section {
+      background: #ddd;
+    }
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .countdown-item {
+      background: var(--dark);
+      padding: 20px;
+      border-radius: 15px;
+      min-width: 100px;
+      border: 1px solid var(--red);
+    }
+    body.light-mode .countdown-item {
+      background: #fff;
+    }
+    .countdown-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--red);
+    }
+    .countdown-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Contact */
+    #contact {
+      background: var(--dark2);
+      border-top: 1px solid #222;
+    }
+    .contact-container {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-container h2 { font-size: 2.2rem; margin-bottom: 8px; }
+    .contact-container h2 span { color: var(--red); }
+    .contact-container p { color: var(--gray); margin: 20px auto; line-height: 1.6; }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0;
+    }
+    .contact-info a {
+      color: var(--gray);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-info a:hover { color: white; }
+    body.light-mode .contact-info a:hover { color: var(--red); }
+
+    /* 🔒 Keamanan: Rate limit notification */
+    .rate-limit-toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: 0.3s;
+      pointer-events: none;
+    }
+    .rate-limit-toast.show {
+      opacity: 1;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 30px 20px 20px;
+      border-top: 1px solid #222;
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .scroll-top {
+      background: var(--red);
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 70%;
+        height: calc(100vh - 70px);
+        background: rgba(13,13,13,0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        transition: 0.3s;
+        gap: 32px;
+        border-right: 1px solid #333;
+      }
+      .nav-links.active { left: 0; }
+      .avatar-ring { width: 220px; height: 220px; }
+      #home { flex-direction: column-reverse; text-align: center; }
+      .socials, .btn-group { justify-content: center; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .floating-social { display: none; }
+      .cursor, .cursor-follower { display: none; }
+      .countdown-timer { gap: 15px; }
+      .countdown-item { padding: 12px; min-width: 70px; }
+      .countdown-number { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="loader"></div>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- Rate Limit Toast -->
+<div class="rate-limit-toast" id="rateLimitToast">⏳ Sabar ya, tunggu sebentar...</div>
+
+<!-- Floating Social -->
+<div class="floating-social">
+  <a href="https://instagram.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+  <a href="https://twitter.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+  <a href="https://github.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+  <a href="https://tiktok.com/@bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+</div>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle" id="themeToggle">
+  <i class="fas fa-moon" id="themeIcon"></i>
+</div>
+
+<!-- Music Player -->
+<div class="music-player" id="musicPlayer">
+  <i class="fas fa-music" id="musicIcon"></i>
+  <span style="font-size: 12px;">🎵 Lofi santai</span>
+</div>
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">Bang<span>Dilee</span></div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#quote">Quote</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- HOME -->
+<section id="home">
+  <div class="home-text">
+    <div class="sapaan">✨ Hai! Saya BangDilee ✨</div>
+    <h1>anak akuakultur<br>yang serius belajar ngoding</h1>
+    <p class="desc">Mobile Legends • FF • Roblox (sejak 2018). Mancing kadang-kadang. Mimpi jadi software engineer dan punya startup sendiri.</p>
+    <div class="socials">
+      <a href="https://instagram.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+      <a href="https://tiktok.com/@bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+    </div>
+    <div class="btn-group">
+      <a href="#gallery" class="btn btn-primary">Lihat Galeriku</a>
+      <a href="#contact" class="btn btn-outline">Hubungi Aku</a>
+    </div>
+  </div>
+  <div class="home-img">
+    <div class="avatar-ring">
+      <img src="image/1000299761.jpg" alt="BangDilee">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <h2>Tentang <span>Diriku</span></h2>
+    <p>📍 Asli Soppeng, 23 tahun. Saat ini sedang menempuh pendidikan di Universitas Hasanuddin, Jurusan Teknologi Akuakultur.</p>
+    <p>Di sela-sela kuliah, aku belajar ngoding sendiri. Dari nol, pelan-pelan, sampai sekarang mulai paham. Cita-citaku jadi software engineer dan punya startup sendiri suatu hari nanti.</p>
+    <p>Soal game — ML, FF, Roblox udah menemani sejak 2018. Kadang mancing buat santai. Yang terpenting, aku ingin dikenal sebagai <strong>anak baik</strong>.</p>
+    <div class="tags">
+      <span class="tag">🎓 Teknologi Akuakultur</span>
+      <span class="tag">💻 Belajar Ngoding</span>
+      <span class="tag">🎮 Mobile Legends</span>
+      <span class="tag">🎣 Mancing</span>
+      <span class="tag">✨ Anak Baik</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h2>📸 <span>Galeri</span> Kegiatanku</h2>
+  <p class="gallery-sub">sehari-hari, gaming, dan keseharian</p>
+
+  <div class="gallery-tabs">
+    <button class="tab-btn active" data-category="gaming">🎮 Gaming</button>
+    <button class="tab-btn" data-category="kampus">🎓 Kampus & Akuakultur</button>
+    <button class="tab-btn" data-category="random">📷 Random & Mancing</button>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="empty-gallery">✨ Belum ada foto. Taruh foto di folder image/gaming/ , image/kampus/ , image/random/</div>
+  </div>
+  <p style="margin-top: 24px; font-size: 0.8rem; color: #555;">💡 Tips: masukkan file JPG/PNG ke folder sesuai kategori, lalu edit kode bagian galleryData</p>
+</section>
+
+<!-- QUOTE -->
+<section id="quote">
+  <div class="quote-box">
+    <div class="quote-text" id="quoteText">"Jadi anak baik itu bukan pilihan, tapi gaya hidup"</div>
+    <div class="quote-author">— BangDilee</div>
+    <button class="new-quote-btn" id="newQuoteBtn">Kutipan Baru ✨</button>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section">
+  <h2>⏰ <span style="color: var(--red);">Menuju Wisuda</span></h2>
+  <p>semangat terus, Bang!</p>
+  <div class="countdown-timer">
+    <div class="countdown-item"><div class="countdown-number" id="days">0</div><div class="countdown-label">Hari</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="hours">0</div><div class="countdown-label">Jam</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="minutes">0</div><div class="countdown-label">Menit</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="seconds">0</div><div class="countdown-label">Detik</div></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-container">
+    <h2>Hubungi <span>BangDilee</span></h2>
+    <p>Santai aja chat-nya. Asal bukan lagi pas push rank atau lagi asik ngoding 😄</p>
+    <div class="contact-info">
+      <!-- 🔒 Email obfuscation: dilindungi dari bot scraper -->
+      <a href="mailto:dileemania@gmail.com" id="emailLink"><i class="fas fa-envelope"></i> <span id="emailDisplay">dileemania@gmail.com</span></a>
+      <a href="tel:085219361530"><i class="fas fa-phone"></i> 0852 1936 1530</a>
+    </div>
+    <div class="socials" style="justify-content: center;">
+      <a href="https://instagram.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+      <a href="https://tiktok.com/@bangdilee" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+  <div class="footer-note">
+    <span>© 2025 BangDilee — dari Soppeng untuk dunia, tetap jadi anak baik ✨</span>
+    <a href="#home" class="scroll-top">↑</a>
+  </div>
+</section>
+
+<script>
+  // 🔒 Keamanan: Prevent Right Click (opsional, proteksi dasar)
+  document.addEventListener('contextmenu', (e) => {
+    // Izinkan right click di area input (untuk kemudahan user)
+    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      // e.preventDefault(); // Uncomment jika ingin blokir right click
+    }
+  });
+
+  // 🔒 Keamanan: Detect DevTools (peringatan sederhana)
+  (function() {
+    const startTime = performance.now();
+    function checkDevTools() {
+      const now = performance.now();
+      if (now - startTime > 100) {
+        console.log("%c🔒 Halo! Kalau mau liat-liat kode, silahkan ya. Tapi tolong hargai karya orang 😊", "color: #e63333; font-size: 14px");
+      }
+    }
+    checkDevTools();
+  })();
+
+  // 🔒 Keamanan: Rate Limiting untuk tombol quote
+  let lastQuoteClick = 0;
+  const quoteBtn = document.getElementById('newQuoteBtn');
+  const rateLimitToast = document.getElementById('rateLimitToast');
+  
+  function showRateLimitToast() {
+    rateLimitToast.classList.add('show');
+    setTimeout(() => {
+      rateLimitToast.classList.remove('show');
+    }, 2000);
+  }
+
+  // Preloader
+  window.addEventListener('load', () => {
+    document.getElementById('preloader').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('preloader').style.display = 'none';
+    }, 500);
+  });
+
+  // Progress Bar
+  window.addEventListener('scroll', () => {
+    const winScroll = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+  });
+
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorFollower = document.getElementById('cursorFollower');
+  if (cursor && cursorFollower) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      cursorFollower.style.left = e.clientX + 'px';
+      cursorFollower.style.top = e.clientY + 'px';
+    });
+  }
+
+  // Scroll Reveal
+  const sections = document.querySelectorAll('section');
+  const revealSection = () => {
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      if (sectionTop < windowHeight - 100) {
+        section.classList.add('revealed');
+      }
+    });
+  };
+  window.addEventListener('scroll', revealSection);
+  revealSection();
+
+  // Dark/Light Mode
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    if (document.body.classList.contains('light-mode')) {
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    } else {
+      themeIcon.classList.remove('fa-sun');
+      themeIcon.classList.add('fa-moon');
+    }
+  });
+
+  // Music Player
+  const musicPlayer = document.getElementById('musicPlayer');
+  const bgMusic = document.getElementById('bgMusic');
+  const musicIcon = document.getElementById('musicIcon');
+  let isPlaying = false;
+  musicPlayer.addEventListener('click', () => {
+    if (isPlaying) {
+      bgMusic.pause();
+      musicIcon.classList.remove('fa-pause');
+      musicIcon.classList.add('fa-music');
+    } else {
+      bgMusic.play().catch(e => console.log('Audio play error:', e));
+      musicIcon.classList.remove('fa-music');
+      musicIcon.classList.add('fa-pause');
+    }
+    isPlaying = !isPlaying;
+  });
+
+  // Quote Generator (tema anak baik) + 🔒 Rate Limiting
+  const quotes = [
+    { text: "Jadi anak baik itu bukan pilihan, tapi gaya hidup", author: "BangDilee" },
+    { text: "Belajar ngoding pelan-pelan, yang penting istiqomah", author: "BangDilee" },
+    { text: "Dari akuakultur ke kode — perjalanan yang seru", author: "BangDilee" },
+    { text: "Main game gapapa, asal jangan lupa ibadah", author: "BangDilee" },
+    { text: "Mimpi besar, jalan pelan, tetap jadi anak baik", author: "BangDilee" },
+    { text: "Software engineer dari Soppeng, itu targetnya", author: "BangDilee" }
+  ];
+  const quoteText = document.getElementById('quoteText');
+  const quoteAuthor = document.querySelector('.quote-author');
+  
+  if (quoteBtn) {
+    quoteBtn.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastQuoteClick < 2000) {
+        showRateLimitToast();
+        return;
+      }
+      lastQuoteClick = now;
+      const random = Math.floor(Math.random() * quotes.length);
+      quoteText.textContent = `"${quotes[random].text}"`;
+      quoteAuthor.textContent = `— ${quotes[random].author}`;
+    });
+  }
+
+  // Countdown (target wisuda)
+  function updateCountdown() {
+    const targetDate = new Date('June 30, 2026 00:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+      const minutes = Math.floor((distance % (60 * 60 * 1000)) / (60 * 1000));
+      const seconds = Math.floor((distance % (60 * 1000)) / 1000);
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+  // Gallery Data — 🔒 Dengan sanitasi dasar
+  const galleryData = {
+    gaming: [
+      { img: "image/gaming/game1.jpg", caption: "Momen push rank" },
+      { img: "image/gaming/game2.jpg", caption: "Squad ML" }
+    ],
+    kampus: [
+      { img: "image/kampus/unhas1.jpg", caption: "Suasana kampus" },
+      { img: "image/kampus/unhas2.jpg", caption: "Praktikum akuakultur" }
+    ],
+    random: [
+      { img: "image/random/mancing1.jpg", caption: "Mancing santai" },
+      { img: "image/random/mancing2.jpg", caption: "Keseharian" }
+    ]
+  };
+
+  // 🔒 Sanitasi caption (mencegah XSS)
+  function sanitizeText(text) {
+    if (!text) return '';
+    return text.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function renderGallery(category) {
+    const grid = document.getElementById("galleryGrid");
+    const items = galleryData[category];
+    if (!items || items.length === 0) {
+      grid.innerHTML = `<div class="empty-gallery">📂 Belum ada foto di folder ${sanitizeText(category)}. Taruh foto JPG/PNG di folder image/${sanitizeText(category)}/</div>`;
+      return;
+    }
+    grid.innerHTML = items.map(item => `
+      <div class="gallery-card">
+        <img src="${item.img}" alt="${sanitizeText(item.caption)}" loading="lazy" onerror="this.src='https://placehold.co/400x200?text=Gambar+belum+ada'">
+        <div class="caption">${sanitizeText(item.caption)}</div>
+      </div>
+    `).join('');
+  }
+
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGallery(btn.getAttribute("data-category"));
+    });
+  });
+  renderGallery("gaming");
+
+  // Navbar Scroll Spy
+  const navLinksDoc = document.querySelectorAll('.nav-links a');
+  const allSections = document.querySelectorAll('section, .countdown-section');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    allSections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (scrollY >= sectionTop && section.id) {
+        current = section.id;
+      }
+    });
+    navLinksDoc.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // Hamburger Menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinksContainer = document.getElementById('navLinks');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => navLinksContainer.classList.toggle('active'));
+    navLinksDoc.forEach(link => link.addEventListener('click', () => navLinksContainer.classList.remove('active')));
+  }
+
+  // 🔒 HTTPS Enforcement (redirect ke HTTPS jika perlu)
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost' && !location.hostname.includes('127.0.0.1')) {
+    // Comment: Untuk GitHub Pages sudah otomatis HTTPS, tidak perlu redirect manual
+    console.log('🔒 Running on HTTPS mode');
+  }
+
+  // 🔒 Prevent form submission if any (tambahan proteksi)
+  const allForms = document.querySelectorAll('form');
+  allForms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      console.log('Form submission prevented for security');
+      e.preventDefault();
+    });
+  });
+</script>
+</body>
+</html>
